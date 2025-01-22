@@ -1,0 +1,16 @@
+<div class="page-header">
+  <%= link_to memories_path, class: 'btn btn-default' do %>
+    All Memories
+  <% end %>
+  <%= link_to edit_memory_path(@memory), class: 'btn btn-primary' do %>
+    Edit
+  <% end %>
+  <h1>Show memory</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Title:</dt>
+  <dd><%= @memory.title %></dd>
+  <dt>Video:</dt>
+  <dd><%= @memory.video %></dd>
+</dl>

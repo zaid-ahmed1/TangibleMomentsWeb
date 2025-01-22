@@ -1,0 +1,39 @@
+<%= form_with(model: memory) do |form| %>
+  <% if memory.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(memory.errors.count, "error") %> prohibited this memory from being saved:</h2>
+
+      <ul>
+      <% memory.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: 'form-label' %>
+      <%= form.text_field :title, class: 'form-control' %>
+    </div>
+
+  <div class="mb-3">
+    <%= form.label :video, class: 'form-label' %>
+      <%= form.file_field :video, class: 'form-control' %>
+    </div>
+
+  <div class="mb-3">
+    <% if memory.persisted? %>
+      <div class="float-end">
+        <%= link_to 'Destroy', memory, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if memory.persisted? %>
+      <%= link_to "Cancel", memory, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", memories_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>
