@@ -20,7 +20,7 @@
         <%= raw @qr_code.as_svg(module_size: 4, standalone: true) %>
       </div>
       <div>
-        <%= link_to 'Download QR Code', download_qr_code_memory_path(@memory), class: 'btn btn-secondary' %>
+        <%= link_to 'Download QR Code', download_qr_code_memory_path(@memory), class: 'btn btn-secondary mt-2' %>
       </div>
     <% else %>
       <p>No QR code available</p>
