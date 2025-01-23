@@ -10,7 +10,21 @@
 
 <dl class="dl-horizontal">
   <dt>Title:</dt>
-  <dd><%= @memory.title %></dd>
+    <dd><%= @memory.title %></dd>
   <dt>Video:</dt>
-  <dd><%= @memory.video %></dd>
+    <%= video_tag @memory.video, controls: true, preload: 'auto', width: 320, height: 240 %>
+    <dt>QR Code:</dt>
+  <dd>
+    <% if @qr_code %>
+      <div>
+        <%= raw @qr_code.as_svg(module_size: 4, standalone: true) %>
+      </div>
+      <div>
+        <%= link_to 'Download QR Code', download_qr_code_memory_path(@memory), class: 'btn btn-secondary' %>
+      </div>
+    <% else %>
+      <p>No QR code available</p>
+    <% end %>
+  </dd>
 </dl>
+

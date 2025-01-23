@@ -1,14 +1,26 @@
 class MemoriesController < ApplicationController
+  before_action :authenticate_user! # Ensure only logged-in users can access
   before_action :set_memory, only: %i[ show edit update destroy ]
 
   # GET /memories or /memories.json
   def index
-    @memories = Memory.all
+    @memories = current_user.memories
   end
-
-  # GET /memories/1 or /memories/1.json
+  
   def show
+    @memory = current_user.memories.find(params[:id])
+    
+    if @memory.video.attached?
+      blob_key = @memory.video.blob.key # Get the blob key
+      @qr_code_url = "https://tangible-moments.me/#{blob_key}" # Format the URL
+      
+      # Generate the QR code
+      require 'rqrcode'
+      @qr_code = RQRCode::QRCode.new(@qr_code_url)
+    end
   end
+  
+  
 
   # GET /memories/new
   def new
@@ -21,7 +33,7 @@ class MemoriesController < ApplicationController
 
   # POST /memories or /memories.json
   def create
-    @memory = Memory.new(memory_params)
+    @memory = current_user.memories.build(memory_params)
 
     respond_to do |format|
       if @memory.save
@@ -55,6 +67,22 @@ class MemoriesController < ApplicationController
       format.html { redirect_to memories_path, status: :see_other, notice: "Memory was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+
+  def download_qr_code
+    memory = Memory.find(params[:id])
+    blob_key = memory.video.blob.key # Adjust this to get the correct blob key
+    qr_code_url = "https://zaid-ahmed.me/#{blob_key}" # Format the URL
+
+    # Generate the QR code
+    require 'rqrcode'
+    qr_code = RQRCode::QRCode.new(qr_code_url)
+
+    # Sanitize the memory title to be a valid filename
+    sanitized_title = memory.title.parameterize
+
+    send_data qr_code.as_svg(module_size: 6, standalone: true), type: 'image/svg+xml', disposition: 'attachment', filename: "#{sanitized_title}.svg"
   end
 
   private

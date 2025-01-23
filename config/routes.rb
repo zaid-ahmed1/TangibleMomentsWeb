@@ -1,7 +1,11 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :memories
+  resources :memories do
+    member do
+      get :download_qr_code
+    end
+  end
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
 authenticate :user, lambda { |u| u.admin? } do
