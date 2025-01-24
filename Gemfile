@@ -83,3 +83,4 @@ gem "whenever", require: false
 gem "responders", github: "heartcombo/responders", branch: "main"
 gem 'aws-sdk-s3'
 gem 'rqrcode'
+gem 'jwt'

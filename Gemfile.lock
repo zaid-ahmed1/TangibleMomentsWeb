@@ -414,6 +414,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   jsbundling-rails
+  jwt
   madmin
   name_of_person!
   noticed (~> 2.0)

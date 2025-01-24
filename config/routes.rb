@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   end
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
+  post '/api/authenticate', to: 'sessions#authenticate'
+
 authenticate :user, lambda { |u| u.admin? } do
   mount Sidekiq::Web => '/sidekiq'
 
