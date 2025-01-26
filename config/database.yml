@@ -83,5 +83,6 @@ test:
 production:
   <<: *default
   database: tangible_moments_web_production
-  username: tangible_moments_web
-  password: <%= ENV["TANGIBLE_MOMENTS_WEB_DATABASE_PASSWORD"] %>
+  username: tangible_moments_web_production_admin
+  host: "3.15.57.55"
+  password: <%= Rails.application.credentials.DB_PASSWORD.prod_db %>
