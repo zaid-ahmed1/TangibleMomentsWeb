@@ -1,43 +1,29 @@
-
 <div class="row">
   <div class="col-sm-6">
     <h1>Memories</h1>
   </div>
 
   <div class="col-sm-6 text-end">
-  <%= link_to new_memory_path, class: 'btn btn-primary' do %>
-    Add New Memory
-  <% end %>
+    <%= link_to new_memory_path, class: 'btn btn-primary' do %>
+      Add New Memory
+    <% end %>
   </div>
 </div>
 
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-    
+<div class="row">
+  <% @memories.each do |memory| %>
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title"><%= memory.title %></h5>
+          <div class="card-text">
+            <%= video_tag memory.video, controls: true, preload: 'auto', width: '100%' %>
+          </div>
+          <%= link_to 'Show', memory, class: 'btn btn-primary mt-3' %>
+          <%= link_to 'Edit', edit_memory_path(memory), class: 'btn btn-secondary mt-3 ms-2' %>
 
-            <th>Title</th>
-            <th>Video</th>
-            
-          <th></th>
-        
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @memories.each do |memory| %>
-        <%= content_tag :tr, id: dom_id(memory), class: dom_class(memory) do %>
-          
-
-                      <td><%= memory.title %></td>
-                      <td><%= memory.video %></td>
-          
-          
-            <td><%= link_to 'Show', memory %></td>
-          
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
