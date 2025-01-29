@@ -2,24 +2,29 @@
   <% if memory.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(memory.errors.count, "error") %> prohibited this memory from being saved:</h2>
-
       <ul>
-      <% memory.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% memory.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="mb-3">
     <%= form.label :title, class: 'form-label' %>
-      <%= form.text_field :title, class: 'form-control' %>
-    </div>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
 
   <div class="mb-3">
     <%= form.label :video, class: 'form-label' %>
-      <%= form.file_field :video, class: 'form-control' %>
-    </div>
+    <%= form.file_field :video, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :qr_code, class: 'form-label' %>
+    <div id="qr-reader" style="width: 300px;"></div>
+    <%= form.text_field :qr_code, id: 'qr_code', class: 'form-control', readonly: true %>
+  </div>
 
   <div class="mb-3">
     <% if memory.persisted? %>
@@ -37,3 +42,28 @@
     <% end %>
   </div>
 <% end %>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+  function onScanSuccess(qrCodeMessage) {
+    const prefix = "https://tangible-moments.me/";
+
+    if (qrCodeMessage.startsWith(prefix)) {
+      // Extract only the part after the prefix
+      const extractedCode = qrCodeMessage.replace(prefix, "");
+      document.getElementById('qr_code').value = extractedCode;
+    } else {
+      console.warn("Invalid QR Code: Does not match expected format.");
+    }
+  }
+
+  function onScanError(errorMessage) {
+    console.warn(`QR Scan Error: ${errorMessage}`);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let qrScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+    qrScanner.render(onScanSuccess, onScanError);
+  });
+</script>
