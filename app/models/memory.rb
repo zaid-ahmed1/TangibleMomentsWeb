@@ -3,5 +3,5 @@ class Memory < ApplicationRecord
   belongs_to :user
 
   validates :title, presence: true
-  validates :video, presence: 
+  validates :video, presence: true
 end
