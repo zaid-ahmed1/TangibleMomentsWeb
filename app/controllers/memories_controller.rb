@@ -9,15 +9,6 @@ class MemoriesController < ApplicationController
   
   def show
     @memory = current_user.memories.find(params[:id])
-    
-    if @memory.video.attached?
-      blob_key = @memory.video.blob.key # Get the blob key
-      @qr_code_url = "https://tangible-moments.me/#{blob_key}" # Format the URL
-      
-      # Generate the QR code
-      require 'rqrcode'
-      @qr_code = RQRCode::QRCode.new(@qr_code_url)
-    end
   end
   
   
@@ -93,6 +84,6 @@ class MemoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def memory_params
-      params.require(:memory).permit(:title, :video)
+      params.require(:memory).permit(:title, :video, :qr_code)
     end
 end
