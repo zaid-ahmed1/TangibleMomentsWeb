@@ -26,6 +26,26 @@
     <%= form.text_field :qr_code, id: 'qr_code', class: 'form-control', readonly: true %>
   </div>
 
+  <!-- ✅ New visibility Field with Radio Buttons -->
+  <div class="mb-3">
+    <%= form.label :visibility, "Memory visibility", class: 'form-label' %><br>
+
+    <div class="form-check">
+      <%= form.radio_button :visibility, 1, id: 'visibility_1', class: 'form-check-input' %>
+      <%= form.label :visibility, "Participant 1", value: 1, class: 'form-check-label', for: 'visibility_1' %>
+    </div>
+
+    <div class="form-check">
+      <%= form.radio_button :visibility, 2, id: 'visibility_2', class: 'form-check-input' %>
+      <%= form.label :visibility, "Participant 2", value: 2, class: 'form-check-label', for: 'visibility_2' %>
+    </div>
+
+    <div class="form-check">
+      <%= form.radio_button :visibility, nil, id: 'visibility_none', class: 'form-check-input' %>
+      <%= form.label :visibility, "None", value: nil, class: 'form-check-label', for: 'visibility_none' %>
+    </div>
+  </div>
+
   <div class="mb-3">
     <% if memory.persisted? %>
       <div class="float-end">
@@ -42,6 +62,7 @@
     <% end %>
   </div>
 <% end %>
+
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
