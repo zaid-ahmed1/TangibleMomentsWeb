@@ -9,4 +9,5 @@ class Memory < ApplicationRecord
   def store_video_key
     update_column(:filekey, video.blob.key)
   end
+
 end

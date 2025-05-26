@@ -84,6 +84,6 @@ class MemoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def memory_params
-      params.require(:memory).permit(:title, :video, :qr_code)
+      params.require(:memory).permit(:title, :video, :qr_code, :visibility)
     end
 end
